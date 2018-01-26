@@ -1,8 +1,8 @@
 # LetterCount
 
-LetterCount allows users to query for the number of times the letter 'p' (or 'P') appeared in their favorite subreddit
-in the past 1000 posts. Currently only post titles are checked for the letter. Post content and comments are ignored. 
-With the application running, you can request a word count for your favorite subreddit by making a request to 
+LetterCount allows users to query for the number of times the letter 'p' (or 'P') appears in their favorite subreddit
+in the past 1000 newest posts. Currently only post titles are checked for the letter. Post content and comments are
+ignored. With the application running, you can request a word count for your favorite subreddit by making a request to 
 `http://127.0.0.1:8000/reddit/<name of subreddit>`, i.e. to count occurrences of 'p' in /r/aww you could navigate to 
 `http://127.0.0.1:8000/reddit/aww` in your browser.
 
@@ -17,12 +17,13 @@ uses `python 2.7.10`, you can specify a specific instance of python for virtuale
 5) Within the top level `lettercount` folder, install dependencies: `pip install -r requirements.txt`
 6) Run it: `python manage.py runserver`
 7) Request a count for your favorite subreddit in browser or via curl: `curl http://127.0.0.1:8000/reddit/aww/`
+8) Run unittests with `python manage.py test`
 
 
 ## Future Improvements
 
 - The Reddit API limits history to the past 1000 posts. An improvement over the current approach would be to run a 
- recurring job that pulls down the post history of every subreddit (there are a little over 1 million)every 10 minutes
+ recurring job that pulls down the post history of every subreddit (there are a little over 1 million) every 10 minutes
  or some other reasonable amount of time. The 'p' count would be updated in the database and retrieved at request time
  to be displayed to the user. This would also require storing some kind of "most recent post retrieved" in the database
  for each subreddit so we know where to start counting from the next time we pull down post history.

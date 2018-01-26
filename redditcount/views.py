@@ -5,17 +5,18 @@ from django.http import HttpResponse
 from praw.exceptions import APIException
 from prawcore import PrawcoreException, Redirect, NotFound
 
+import letter_count_util
 from redditcount.reddit_client import RedditClient
 
 
 def index(request, subreddit):
-    count = 0
+    titles = []
     try:
         submissions = RedditClient().get_new_submissions_for_subreddit(subreddit)
         for submission in submissions:
             title = submission.title
             if title:
-                count += title.lower().count('p')
+                titles.append(title.lower())
     except (Redirect, NotFound):
         # Reddit API redirects to '/subreddits/search' for unknown subreddits, and returns 404 for invalid subreddit
         # names (i.e. too long or invalid character)
@@ -24,4 +25,5 @@ def index(request, subreddit):
     except (APIException, PrawcoreException) as requestError:
         return HttpResponse('Error requesting subreddit submissions: {}.'.format(requestError))
 
-    return HttpResponse("The letter 'p' occurs {} times in /r/{}.".format(count, subreddit))
+    count = letter_count_util.calculate_substring_count_in_string_list("p", titles)
+    return HttpResponse("The letter 'p' occurs {} times in the most recent 1000 posts on /r/{}.".format(count, subreddit))
