@@ -1,16 +1,17 @@
 from unittest import TestCase
-import letter_count_util
+
+import lettercount_util
 
 
-class TestLetterCountUtil(TestCase):
+class TestLettercountUtil(TestCase):
     def test_calculate_substring_count_in_string_list(self):
         str_list = ['pizza', 'papa john\'s', 'dog', 'cat']
-        self.assertEqual(letter_count_util.calculate_substring_count_in_string_list('p', str_list), 3)
+        self.assertEqual(lettercount_util.calculate_substring_count_in_string_list('p', str_list), 3)
 
     def test_calculate_substring_count_in_string_list_empty_list(self):
         str_list = []
-        self.assertEqual(letter_count_util.calculate_substring_count_in_string_list('p', str_list), 0)
+        self.assertEqual(lettercount_util.calculate_substring_count_in_string_list('p', str_list), 0)
 
     def test_calculate_substring_count_in_string_list_empty_substr(self):
         str_list = ['pizza', 'papa john\'s', 'dog', 'cat']
-        self.assertEqual(letter_count_util.calculate_substring_count_in_string_list('', str_list), 0)
+        self.assertEqual(lettercount_util.calculate_substring_count_in_string_list('', str_list), 0)
